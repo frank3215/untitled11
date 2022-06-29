@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Skin/mania-hit0.png</file>
+        <file>Skin/mania-hit100.png</file>
+        <file>Skin/mania-hit200.png</file>
+        <file>Skin/mania-hit300.png</file>
+        <file>Skin/mania-hit300g.png</file>
+        <file>Skin/mania-hit50.png</file>
+        <file>Skin/mania-noteS.png</file>
+        <file>Skin/mania-note1.png</file>
+        <file>Skin/mania-note2.png</file>
+        <file>Songs/Cirno_Break/song.mp3</file>
+        <file>Songs/Cirno_Break/Challenging.osu</file>
+        <file>Songs/Cirno_Break/Difficult.osu</file>
+        <file>Songs/Cirno_Break/Normal.osu</file>
+        <file>Songs/Cirno_Break/Easy.osu</file>
+        <file>Songs/Crack_traxxxx/song.mp3</file>
+        <file>Songs/Crack_traxxxx/Challenging.osu</file>
+        <file>Songs/Crack_traxxxx/Difficult.osu</file>
+        <file>Songs/Crack_traxxxx/Easy.osu</file>
+        <file>Songs/Crack_traxxxx/bg.jpg</file>
+        <file>Songs/Cirno_Break/bg.jpg</file>
+    </qresource>
+</RCC>
