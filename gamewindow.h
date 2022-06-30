@@ -16,7 +16,7 @@ public:
 signals:
 
 public slots:
-    void startGame(QString songName, QString difficultyName, double songSpeed, int OD);
+    void startGame(QString songName, QString difficultyName, double songSpeed, int OD, int scrollSpeed);
     void showResult();
     void restartGame();
     void selectSong();

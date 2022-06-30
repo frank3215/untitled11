@@ -6,6 +6,7 @@
 class Score : public QGraphicsTextItem
 {
 public:
+    void clear();
     int score;
     Score();
     void increaseScore(int delta);

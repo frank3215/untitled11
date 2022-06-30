@@ -27,11 +27,12 @@ GameWindow::GameWindow(QWidget *parent)
     this->setFixedSize(widget->size());
 }
 
-void GameWindow::startGame(QString songName, QString difficultyName, double songSpeed, int OD)
+void GameWindow::startGame(QString songName, QString difficultyName, double songSpeed, int OD, int scrollSpeed)
 {
     qDebug() << songName << difficultyName << songSpeed << OD;
     mainwindow->hide();
-    game->setSong(songName, difficultyName, songSpeed, OD);
+    game->setSong(songName, difficultyName, songSpeed, OD, scrollSpeed);
+    game->clear();
     game->show();
     setFixedSize(game->size());
     // game->start();
@@ -47,6 +48,7 @@ void GameWindow::showResult()
 void GameWindow::restartGame() {
     qDebug() << "GameWindow::restartGame";
     settlement->hide();
+    game->clear();
     game->show();
     // game->start();
 }
@@ -65,7 +67,8 @@ void GameWindow::exitGame() {
 
 void GameWindow::startScreen() {
     qDebug() << "GameWindow::startScreen";
-    settlement->show();
+    settlement->hide();
+    mainwindow->hide();
     widget->show();
     setFixedSize(widget->size());
 }

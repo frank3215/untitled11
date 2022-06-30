@@ -85,7 +85,7 @@ MainWindow::MainWindow(QWidget *parent)
             if (ui->comboBox->currentText() == "Relax") OD = 6;
             if (ui->comboBox->currentText() == "Strict") OD = 10;
             qDebug() << "STARTGAME";
-            emit this->startGame(this->musictitle, ui->comboBox_2->currentText(), songSpeed, OD);
+            emit this->startGame(this->musictitle, ui->comboBox_2->currentText(), songSpeed, OD, ui->spinBox->value());
             this->hide();
            });
        });
@@ -98,6 +98,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->label->setStyleSheet("font-size:25px;color:white");
     ui->label_2->setStyleSheet("font-size:25px;color:white");
     ui->label_3->setStyleSheet("font-size:25px;color:white");
+    ui->label_4->setStyleSheet("font-size:25px;color:white");
 
     ui->comboBox->addItem("Normal");
     ui->comboBox->addItem("Relax");

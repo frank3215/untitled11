@@ -84,6 +84,7 @@ void Judge::setOD(int _OD)
 void Judge::clear()
 {
     accuracy->clear();
+    score->clear();
     combo = 0;
     cnt = std::vector<int>(windowCount+1);
 }

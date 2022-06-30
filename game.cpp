@@ -9,7 +9,7 @@
 #include "ui_form.h"
 
 Game::Game(QWidget *parent) : QWidget(parent), ui(new Ui::Form()) {
-    visualScrollSpeed = 600;
+    visualScrollSpeed = 500;
     musicVolume = 50;
 
     ui->setupUi(this);
@@ -71,9 +71,6 @@ Game::Game(QWidget *parent) : QWidget(parent), ui(new Ui::Form()) {
 }
 
 void Game::start() {
-    // clear
-    judgement->clear();
-
     // set up
     scrollSpeed = visualScrollSpeed * musicSpeed;
 
@@ -196,16 +193,21 @@ int Game::endGame() {
     return ret;
 }
 
+void Game::clear() {
+    judgement->clear();
+}
+
 void Game::setResults(Settlement_interface * settlement) {
     judgement->setResults(settlement);
 }
 
-void Game::setSong(QString songName, QString difficultyName, double songSpeed, int OD)
+void Game::setSong(QString songName, QString difficultyName, double songSpeed, int OD, int _visualScrollSpeed)
 {
     osuURL = QString(":/Songs/") + songName + QString("/") + difficultyName + QString(".osu");
     musicURL = QString("qrc:/Songs/") + songName + QString("/song.mp3");
     musicSpeed = songSpeed;
     judgement->setOD(OD);
+    visualScrollSpeed = _visualScrollSpeed;
 }
 
 void Game::pauseGame() {

@@ -7,9 +7,7 @@ Accuracy::Accuracy()
     setPos(marginLeft + playFieldWidth, 0);
     setFont(QFont("times", 60));
     setDefaultTextColor(Qt::black);
-    setPlainText(QString("--.--%"));
-    count = 0;
-    total = 0;
+    clear();
 }
 
 void Accuracy::addPercent(int percent) {
@@ -38,4 +36,5 @@ void Accuracy::clear()
 {
     total = 0;
     count = 0;
+    setPlainText(QString("--.--%"));
 }

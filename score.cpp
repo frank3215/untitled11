@@ -1,6 +1,12 @@
 #include "score.h"
 #include <QFont>
 
+void Score::clear()
+{
+    score = 0;
+    redraw();
+}
+
 Score::Score()
 {
     score = 0;

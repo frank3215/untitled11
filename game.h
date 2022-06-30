@@ -45,8 +45,9 @@ public slots:
     void keyPress(int key);
     void pauseGame();
     void continueGame();
+    void clear();
     int endGame();
-    void setSong(QString songName, QString difficultyName, double songSpeed, int OD);
+    void setSong(QString songName, QString difficultyName, double songSpeed, int OD, int _visualscrollSpeed);
 private slots:
     void on_pushButton_clicked();
 

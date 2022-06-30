@@ -25,7 +25,15 @@
   <property name="windowTitle">
    <string>选歌界面</string>
   </property>
-  <widget class="QWidget" name="centralwidget">
+  <widget class="QWidget" name="centralwidget" native="true">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>410</width>
+     <height>601</height>
+    </rect>
+   </property>
    <widget class="QScrollArea" name="scrollArea">
     <property name="geometry">
      <rect>
@@ -433,7 +441,7 @@
       <x>230</x>
       <y>30</y>
       <width>160</width>
-      <height>211</height>
+      <height>361</height>
      </rect>
     </property>
     <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -475,6 +483,29 @@
      </item>
      <item>
       <widget class="QComboBox" name="comboBox"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Scroll Speed</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignCenter</set>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QSpinBox" name="spinBox">
+       <property name="minimum">
+        <number>400</number>
+       </property>
+       <property name="maximum">
+        <number>600</number>
+       </property>
+       <property name="singleStep">
+        <number>10</number>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

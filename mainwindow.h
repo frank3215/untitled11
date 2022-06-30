@@ -24,6 +24,6 @@ private:
     Ui::MainWindow *ui;
 signals:
     void backsignal();
-    void startGame(QString songName, QString difficultyName, double songSpeed, int OD);
+    void startGame(QString songName, QString difficultyName, double songSpeed, int OD, int scrollSpeed);
 };
 #endif // MAINWINDOW_H
