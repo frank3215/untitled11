@@ -12,6 +12,7 @@ SOURCES += \
     accuracy.cpp \
     buttonevent.cpp \
     game.cpp \
+    gamewindow.cpp \
     judge.cpp \
     main.cpp \
     mainwindow.cpp \
@@ -20,12 +21,15 @@ SOURCES += \
     note.cpp \
     playfield.cpp \
     score.cpp \
+    selectsong.cpp \
+    settlement_interface.cpp \
     widget.cpp
 
 HEADERS += \
     accuracy.h \
     buttonevent.h \
     game.h \
+    gamewindow.h \
     judge.h \
     mainwindow.h \
     mybutton.h \
@@ -33,11 +37,15 @@ HEADERS += \
     note.h \
     playfield.h \
     score.h \
+    selectsong.h \
+    settlement_interface.h \
     widget.h
 
 FORMS += \
     form.ui \
     mainwindow.ui \
+    selectsong.ui \
+    settlement_interface.ui \
     widget.ui
 
 # Default rules for deployment.

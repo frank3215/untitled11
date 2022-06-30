@@ -15,6 +15,7 @@
 #include "score.h"
 #include "judge.h"
 #include "accuracy.h"
+#include "settlement_interface.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -36,15 +37,16 @@ public:
     int visualScrollSpeed; // 400 ~ 600
     int musicVolume; // 0 ~ 100
     QString musicURL, osuURL;
-    Game(QString songName, QString difficultyName);
+    Game(QWidget * parent = nullptr);
+    void setResults(Settlement_interface *settlement);
 public slots:
-    void positionChanged(qint64 position);
     void timerAlert();
     void start();
     void keyPress(int key);
     void pauseGame();
     void continueGame();
     int endGame();
+    void setSong(QString songName, QString difficultyName, double songSpeed, int OD);
 private slots:
     void on_pushButton_clicked();
 
@@ -71,10 +73,12 @@ private:
     Judge * judgement;
     Accuracy * accuracy;
     void redraw(int cur = -1);
+    Settlement_interface * settlement;
     ~Game();
 
 signals:
     void gameEnded();
+    void gameExit();
 };
 
 #endif // GAME_H

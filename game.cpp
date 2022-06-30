@@ -8,16 +8,11 @@
 #include "judge.h"
 #include "ui_form.h"
 
-Game::Game(QString songName, QString difficultyName) : ui(new Ui::Form()) {
-    musicSpeed = 1.00;
+Game::Game(QWidget *parent) : QWidget(parent), ui(new Ui::Form()) {
     visualScrollSpeed = 600;
     musicVolume = 50;
-    osuURL = QString(":/Songs/") + songName + QString("/") + difficultyName + QString(".osu");
-    musicURL = QString("qrc:/Songs/") + songName + QString("/song.mp3");
-
 
     ui->setupUi(this);
-    show();
 
     // -------------
 
@@ -76,11 +71,16 @@ Game::Game(QString songName, QString difficultyName) : ui(new Ui::Form()) {
 }
 
 void Game::start() {
+    // clear
+    judgement->clear();
+
+    // set up
     scrollSpeed = visualScrollSpeed * musicSpeed;
 
     // load .osu file
     QFile osuFile(osuURL);
     file = &osuFile;
+    for (int i = 0; i < columnCount; ++i) notes[i].clear();
     if (!osuFile.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
@@ -111,7 +111,7 @@ void Game::start() {
     player->setSource(QUrl(musicURL));
     audio->setVolume(musicVolume);
     player->setPlaybackRate(musicSpeed);
-    connect(player, SIGNAL(positionChanged(qint64)), this, SLOT(positionChanged(qint64)));
+    player->setPosition(0);
 
     connect(timer, &QTimer::timeout, this, &Game::timerAlert);
     timer->start(5);
@@ -136,10 +136,6 @@ void Game::keyPress(int i)
         scene->removeItem(note);
         st[i]++;
     }
-}
-
-void Game::positionChanged(qint64 position)
-{
 }
 
 void Game::timerAlert() {
@@ -188,21 +184,28 @@ void Game::redraw(int cur)
 }
 
 int Game::endGame() {
-    view->hide();
+    for (int i = 0; i < columnCount; ++i) {
+        for (int j = st[i]; j < ed[i]; ++j) scene->removeItem(notes[i][j]);
+    }
+    for (int i = 0; i < columnCount; ++i) {
+        for (int j = 0; j < (int)notes[i].size(); ++j) delete notes[i][j];
+        notes[i].clear();
+    }
+    // view->hide();
     int ret = score->score;
-
-    delete judgement;
-    delete playField;
-    delete score;
-    delete accuracy;
-
-    delete scene;
-    delete view;
-
-    delete audio;
-    delete player;
-    delete timer;
     return ret;
+}
+
+void Game::setResults(Settlement_interface * settlement) {
+    judgement->setResults(settlement);
+}
+
+void Game::setSong(QString songName, QString difficultyName, double songSpeed, int OD)
+{
+    osuURL = QString(":/Songs/") + songName + QString("/") + difficultyName + QString(".osu");
+    musicURL = QString("qrc:/Songs/") + songName + QString("/song.mp3");
+    musicSpeed = songSpeed;
+    judgement->setOD(OD);
 }
 
 void Game::pauseGame() {
@@ -217,6 +220,17 @@ void Game::continueGame() {
 
 Game::~Game()
 {
+    delete judgement;
+    delete playField;
+    delete score;
+    delete accuracy;
+
+    delete scene;
+    delete view;
+
+    delete audio;
+    delete player;
+    delete timer;
 }
 
 void Game::on_pushButton_clicked()
@@ -241,7 +255,8 @@ void Game::on_pushButton_2_clicked()
 {
     endGame();
     hide();
+    player->stop();
+    timer->stop();
     emit this->gameEnded();
-    delete this;
 }
 

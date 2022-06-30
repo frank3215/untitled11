@@ -12,10 +12,11 @@
 #include<QListView>
 #include <QStandardItemModel>
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent)
+    : QWidget(parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
+    this->musictitle = ui->btn1->text();
     //放音乐
     //QSound* music=new QSound("",this);
     //music->play();
@@ -76,33 +77,39 @@ MainWindow::MainWindow(QWidget *parent)
         animation2->start();
         qDebug() << ui->comboBox_2->currentIndex();
         QTimer::singleShot(500,this,[=](){
-            game = new Game(this->musictitle, ui->comboBox_2->currentText());
-            connect(game, &Game::gameEnded, this, &MainWindow::showAgain);
+            double songSpeed = 1.00;
+            qDebug() << ui->comboBox->currentText();
+            if (ui->comboBox_3->currentText() == "Double Time") songSpeed = 1.5;
+            if (ui->comboBox_3->currentText() == "Half Time") songSpeed = 0.5;
+            int OD = 8;
+            if (ui->comboBox->currentText() == "Relax") OD = 6;
+            if (ui->comboBox->currentText() == "Strict") OD = 10;
+            qDebug() << "STARTGAME";
+            emit this->startGame(this->musictitle, ui->comboBox_2->currentText(), songSpeed, OD);
             this->hide();
-            game->show();
            });
        });
-
-
-
 
     //设置scroll透明背景
     QPalette pa = ui->scrollArea->palette();
     pa.setBrush(QPalette::Window, Qt::transparent);
     ui->scrollArea->setPalette(pa);
 
+    ui->label->setStyleSheet("font-size:25px;color:white");
+    ui->label_2->setStyleSheet("font-size:25px;color:white");
+    ui->label_3->setStyleSheet("font-size:25px;color:white");
 
+    ui->comboBox->addItem("Normal");
+    ui->comboBox->addItem("Relax");
+    ui->comboBox->addItem("Strict");
 
-    //ui->comboBox->addItem("MOD");
+    ui->comboBox_3->addItem("Normal");
+    ui->comboBox_3->addItem("Half Time");
+    ui->comboBox_3->addItem("Double Time");
+
     ui->comboBox_2->addItem("Easy");
     ui->comboBox_2->addItem("Difficult");
-    //ui->comboBox->addItem("No Fail");
     ui->comboBox_2->addItem("Challenging");
-   // ui->comboBox->addItem("Half Time");
-    //ui->comboBox->addItem("Double Time");
-
-
-
 
     connect(ui->btn1,&buttonEvent::readyplay,[=](){
         qDebug() << ui->btn1->text();
@@ -142,7 +149,9 @@ MainWindow::MainWindow(QWidget *parent)
         this->musictitle=ui->btn9->text();
     });
     ui->comboBox_2->setStyleSheet("QComboBox{background:rgba(0,0,0,0);font-size:15px;color:white}");
-    ui->widget->setStyleSheet("background-color:rgba(0,0,0,0);color:white");
+    ui->comboBox->setStyleSheet("QComboBox{background:rgba(0,0,0,0);font-size:15px;color:white}");
+    ui->comboBox_3->setStyleSheet("QComboBox{background:rgba(0,0,0,0);font-size:15px;color:white}");
+    // ui->verticalLayout_2->setStyleSheet("background-color:rgba(0,0,0,0);color:white");
     connect(ui->pushButton,&QPushButton::clicked,[=](){
 
         emit this->backsignal();
@@ -163,7 +172,6 @@ void MainWindow::paintEvent(QPaintEvent* e)
     QPixmap pix;
     pix.load((":/background.png"));
     painter.drawPixmap(0,0,this->width(),this->height(),pix);
-
 }
 
 void MainWindow::showAgain()

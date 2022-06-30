@@ -8,7 +8,7 @@ QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class MainWindow : public QMainWindow
+class MainWindow : public QWidget
 {
     Q_OBJECT
 
@@ -24,5 +24,6 @@ private:
     Ui::MainWindow *ui;
 signals:
     void backsignal();
+    void startGame(QString songName, QString difficultyName, double songSpeed, int OD);
 };
 #endif // MAINWINDOW_H

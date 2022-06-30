@@ -22,6 +22,8 @@ public:
 
 signals:
     void backsignal();
+    void selectSong();
+    void exitGame();
 private:
     Ui::Widget *ui;
 };

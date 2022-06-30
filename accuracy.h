@@ -10,6 +10,9 @@ class Accuracy : public QGraphicsTextItem
 public:
     Accuracy();
     void addPercent(int percent);
+    double getAccuracy();
+    QString getRanking();
+    void clear();
 private:
     int count;
     int total;

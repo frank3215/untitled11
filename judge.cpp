@@ -12,6 +12,7 @@ const int judgementImageX = marginLeft + playFieldWidth/2, judgementImageY = mar
 
 Judge::Judge(QGraphicsScene *scene, Score * _score, Accuracy * _accuracy)
 {
+    cnt = std::vector<int>(windowCount+1);
     scene->addItem(this);
     setPos(judgementX, judgementY);
     timer = new QTimer();
@@ -24,6 +25,8 @@ Judge::Judge(QGraphicsScene *scene, Score * _score, Accuracy * _accuracy)
     setPlainText("Judgement\nArea");
     combo = 0;
     setTextWidth(500);
+
+    setOD(8);
 }
 
 void Judge::judge(int cur, Note *note, double musicSpeed) {
@@ -44,11 +47,13 @@ void Judge::judge(int cur, Note *note, double musicSpeed) {
 
 void Judge::showJudgement(int judgement, int offset)
 {
+    cnt[judgement]++;
     if (judgement < comboLimit) combo++;
     else combo = 0;
     // qDebug() << judgement << " " << QString(judgements[judgement]);
     judgementImage->setPixmap(QPixmap(judgementImages[judgement]));
     judgementImage->setPos(judgementImageX-judgementImage->boundingRect().width()/2, judgementImageY-judgementImage->boundingRect().height()/2);
+    judgementImage->show();
     setHtml(QString("<center>") +
                 (judgement != Miss ? QString::number(offset) + QString("ms<br/>") : QString("<br/>") ) +
                 QString::number(combo) + QString(" COMBO") +
@@ -65,12 +70,31 @@ bool Judge::canHit(int cur, Note * note, double musicSpeed) {
     return abs(cur - note->time)*musicSpeed <= windows[Bad];
 }
 
+void Judge::setResults(Settlement_interface * settlement)
+{
+    settlement->setResult(cnt[0]+cnt[1], cnt[2], cnt[3], cnt[4]+cnt[5], score->score, accuracy->getRanking());
+}
+
+void Judge::setOD(int _OD)
+{
+    OD = _OD;
+    windows = std::vector<int>({ 16,  64 - OD * 3 , 97 - OD * 3, 127 - OD * 3, 151 - OD * 3 });
+}
+
+void Judge::clear()
+{
+    accuracy->clear();
+    combo = 0;
+    cnt = std::vector<int>(windowCount+1);
+}
+
 bool Judge::hasMissed(int cur, Note * note, double musicSpeed) {
     return (cur - note->time)*musicSpeed > windows[Bad];
 }
 
 void Judge::hideJudgement() {
     setPlainText("");
+    judgementImage->hide();
 }
 
 Judge::~Judge()

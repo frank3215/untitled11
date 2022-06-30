@@ -40,17 +40,11 @@ Widget::Widget(QWidget *parent)
             animation2->start();
             QTimer::singleShot(500,this,[=](){
 
-                    this->close();
+                    emit this->exitGame();
                });
            });
-     main=new MainWindow();
-     connect(main,&MainWindow::backsignal,[=](){
-        main->hide();
-        this->show();
-     });
      connect(ui->pushButton,&QPushButton::clicked,[=](){
-         this->hide();
-         main->show();
+         emit this->selectSong();
      });
 }
 void Widget::paintEvent(QPaintEvent* e)
